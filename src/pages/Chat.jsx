@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {socket} from "../index";
 import axios from "axios";
+import {Context} from "../components/Secure";
 
 const Chat = () => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [user] = useContext(Context);
 
     useEffect(() => {
         socket.on('message', (msg) => {

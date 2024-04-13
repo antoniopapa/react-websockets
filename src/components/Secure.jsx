@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import axios from "axios";
 import {Outlet, useNavigate} from "react-router-dom";
+
+export const Context = createContext(null)
 
 const Secure = () => {
     const navigate = useNavigate()
@@ -17,7 +19,7 @@ const Secure = () => {
         })()
     }, []);
 
-    return <>
+    return <Context.Provider value={[user, setUser]}>
         <header className="d-flex justify-content-end py-3">
             <ul className="nav nav-pills">
                 <li className="nav-item">
@@ -27,7 +29,7 @@ const Secure = () => {
         </header>
 
         <Outlet/>
-    </>
+    </Context.Provider>
 };
 
 export default Secure;
