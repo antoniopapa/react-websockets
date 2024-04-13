@@ -5,8 +5,15 @@ import axios from "axios";
 const Chat = () => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
+        (async () => {
+            const {data} = await axios.get('user')
+            console.log(data)
+            setUser(data)
+
+        })()
         socket.on('message', (msg) => {
             setMessages(messages => [...messages, msg])
         })

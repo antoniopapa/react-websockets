@@ -1,12 +1,18 @@
 import React from 'react';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate()
+
     const submit = async (e) => {
         e.preventDefault()
         const form = new FormData(e.target)
         const inputs = Object.fromEntries(form.entries())
-        await axios.post('login', inputs)
+        const {data} = await axios.post('login', inputs)
+        localStorage.setItem('token', data.jwt)
+        axios.defaults.headers["Authorization"] = `Bearer ${data.jwt}`
+        await navigate('/')
     }
 
     return <main className="form-signin w-100 m-auto">
