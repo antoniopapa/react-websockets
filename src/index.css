@@ -10,3 +10,9 @@
 #reply {
   height: 70px;
 }
+
+.form-signin {
+  max-width: 600px;
+  padding: 15px;
+}
+
