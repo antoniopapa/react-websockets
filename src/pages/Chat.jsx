@@ -19,7 +19,7 @@ const Chat = () => {
     const submit = async (e) => {
         e.preventDefault()
 
-        await axios.post('http://localhost:8000/api/message', {
+        await axios.post('message', {
             message
         })
 

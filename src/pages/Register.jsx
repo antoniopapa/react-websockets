@@ -1,13 +1,16 @@
 import React from 'react';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
 
     const submit = async (e) => {
         e.preventDefault()
         const form = new FormData(e.target)
         const inputs = Object.fromEntries(form.entries())
-        await axios.post('http://localhost:8000/api/register', inputs)
+        await axios.post('register', inputs)
+        await navigate('/login')
     }
 
     return <main className="form-signin w-100 m-auto">

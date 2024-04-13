@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {io} from "socket.io-client";
+import axios from "axios";
+
+axios.defaults.baseURL = 'http://localhost:8000/api/'
 
 export const socket = io("ws://localhost:8080/", {});
 
