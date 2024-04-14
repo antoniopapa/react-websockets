@@ -9,20 +9,31 @@ const Chat = () => {
     const [user] = useContext(Context);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [page, setPage] = useState(1);
+    const [lastPage, setLastPage] = useState(false);
+
+    const load = async () => {
+        const {data} = await axios.get(`users/${id}/messages?page=${page}`)
+        setMessages(page === 1 ? data.messages : [...data.messages, ...messages])
+        setLastPage(data.messages.length === 0)
+    }
 
     useEffect(() => {
-        (async () => {
-            const {data} = await axios.get(`users/${id}/messages`)
-            setMessages(data.messages)
+        setPage(1)
+        load()
 
-            socket.on('message', (msg) => {
-                setMessages(messages => [...messages, msg])
-            })
-        })()
+        socket.on('message', (msg) => {
+            setMessages(messages => [...messages, msg])
+        })
+
         return () => {
             socket.off('message')
         }
     }, [id]);
+
+    useEffect(() => {
+        load()
+    }, [page])
 
     const submit = async (e) => {
         e.preventDefault()
@@ -40,6 +51,10 @@ const Chat = () => {
         </div>
 
         <div id="conversation">
+            {!lastPage && <div className="text-center py-1">
+                <a href="#" className="alert-link" onClick={() => setPage(page + 1)}>Load more recent</a>
+            </div>}
+
             {messages.map(m => {
                 let html;
 
