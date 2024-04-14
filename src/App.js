@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Secure from "./components/Secure";
 import Account from "./pages/Account";
+import Layout from "./components/Layout";
 
 function App() {
     return <div className="container">
@@ -12,9 +13,11 @@ function App() {
             <Routes>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/" element={<Secure />}>
-                    <Route path="/" element={<Chat/>}/>
+                <Route path="/" element={<Secure/>}>
                     <Route path="/account" element={<Account/>}/>
+                    <Route path="/" element={<Layout/>}>
+                        <Route path="/" element={<Chat/>}/>
+                    </Route>
                 </Route>
             </Routes>
         </BrowserRouter>
