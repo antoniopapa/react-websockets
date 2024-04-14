@@ -3,6 +3,7 @@ import {socket} from "../index";
 import axios from "axios";
 import {Context} from "../components/Secure";
 import {useParams} from "react-router-dom";
+import Upload from "../components/Upload.";
 
 const Chat = () => {
     const {id} = useParams();
@@ -77,6 +78,8 @@ const Chat = () => {
 
         <form id="reply" className="p-3 w-100" onSubmit={submit}>
             <div className="input-group">
+                <Upload/>
+
                 <input className="form-control" placeholder="Write a message" onChange={e => setMessage(e.target.value)}/>
             </div>
         </form>
