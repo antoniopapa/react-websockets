@@ -16,7 +16,7 @@ function App() {
                 <Route path="/" element={<Secure/>}>
                     <Route path="/account" element={<Account/>}/>
                     <Route path="/" element={<Layout/>}>
-                        <Route path="/" element={<Chat/>}/>
+                        <Route path="/users/:id" element={<Chat/>}/>
                     </Route>
                 </Route>
             </Routes>

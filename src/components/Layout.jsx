@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Outlet} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import axios from "axios";
 
 const Layout = () => {
@@ -22,13 +22,13 @@ const Layout = () => {
 
                 <div className="list-group list-group-flush border-bottom scrollarea">
                     {users.map(u => {
-                        return <a href="#" className="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
+                        return <Link to={`/users/${u.id}`} className="list-group-item list-group-item-action py-3 lh-sm" aria-current="true" key={u}>
                             <div className="d-flex w-100 align-items-center justify-content-between">
                                 <strong className="mb-1">{u.first_name} {u.last_name}</strong>
                                 <small></small>
                             </div>
                             <div className="col-10 mb-1 small"></div>
-                        </a>
+                        </Link>
                     })}
                 </div>
             </div>
