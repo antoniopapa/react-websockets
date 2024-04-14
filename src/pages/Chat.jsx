@@ -27,8 +27,8 @@ const Chat = () => {
     const submit = async (e) => {
         e.preventDefault()
 
-        await axios.post('message', {
-            message
+        await axios.post('messages', {
+            receiver_id: id, content: message, type: 'text'
         })
 
         setMessage('')
@@ -36,7 +36,7 @@ const Chat = () => {
 
     return <>
         <div id="head" className="py-3 lh-sm border-bottom">
-            <strong className="mb-1">Members: John Doe, Jane Smith</strong>
+            <strong className="mb-1">Members: </strong>
         </div>
 
         <div id="conversation">
@@ -44,7 +44,7 @@ const Chat = () => {
                 let html;
 
                 if (m.type === "text") {
-                    const cls = m.sender.id === user.id ? "alert-primary" : "alert-success float-end";
+                    const cls = m.sender.id === user.id ? "alert-primary float-end" : "alert-success";
                     html = <div className={`alert d-inline-block ${cls}`} role="alert">
                         {m.content}
                     </div>
@@ -53,9 +53,9 @@ const Chat = () => {
                 }
 
                 return <div className="row pt-2" key={m.id}>
-                    {m.receiver.id === user.id ?? <div className="col-6"/>}
+                    {m.sender.id === user.id ? <div className="col-6"/> : null}
                     <div className="col-6">{html}</div>
-                    {m.sender.id === user.id ?? <div className="col-6"/>}
+                    {m.receiver.id === user.id ? <div className="col-6"/> : null}
                 </div>
             })}
         </div>
