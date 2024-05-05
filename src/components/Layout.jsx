@@ -3,13 +3,13 @@ import {Link, Outlet} from "react-router-dom";
 import axios from "axios";
 
 const Layout = () => {
-    const [users, setUsers] = useState([]);
+    const [rooms, setRooms] = useState([]);
     const [search, setSearch] = useState('');
 
     useEffect(() => {
         (async () => {
-            const {data} = await axios.get(`users?name=${search}`)
-            setUsers(data)
+            const {data} = await axios.get(`rooms?name=${search}`)
+            setRooms(data)
         })()
     }, [search]);
 
@@ -21,15 +21,17 @@ const Layout = () => {
                 </div>
 
                 <div className="list-group list-group-flush border-bottom scrollarea">
-                    {users.map(u => {
-                        return <Link to={`/users/${u.id}`} className="list-group-item list-group-item-action py-3 lh-sm" aria-current="true" key={u}>
+                    {rooms.map(r => {
+                        return <Link to={`/rooms/${r.id}`} className="list-group-item list-group-item-action py-3 lh-sm" aria-current="true" key={r}>
                             <div className="d-flex w-100 align-items-center justify-content-between">
-                                <strong className="mb-1">{u.first_name} {u.last_name}</strong>
+                                <strong className="mb-1">{r.title}</strong>
                                 <small></small>
                             </div>
                             <div className="col-10 mb-1 small"></div>
                         </Link>
                     })}
+
+                    <Link to={'rooms/create'} className="btn btn-primary my-2">Create Room</Link>
                 </div>
             </div>
         </div>

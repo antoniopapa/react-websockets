@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Secure from "./components/Secure";
 import Account from "./pages/Account";
 import Layout from "./components/Layout";
+import CreateRoom from "./pages/CreateRoom";
 
 function App() {
     return <div className="container">
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/" element={<Secure/>}>
                     <Route path="/account" element={<Account/>}/>
+                    <Route path="/rooms/create" element={<CreateRoom/>}/>
                     <Route path="/" element={<Layout/>}>
                         <Route path="/users/:id" element={<Chat/>}/>
                     </Route>
