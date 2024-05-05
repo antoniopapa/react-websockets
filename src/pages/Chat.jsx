@@ -8,13 +8,15 @@ import Upload from "../components/Upload.";
 const Chat = () => {
     const {id} = useParams();
     const [user] = useContext(Context);
+    const [room, setRoom] = useState({});
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [page, setPage] = useState(1);
     const [lastPage, setLastPage] = useState(false);
 
     const load = async () => {
-        const {data} = await axios.get(`users/${id}/messages?page=${page}`)
+        const {data} = await axios.get(`rooms/${id}/messages?page=${page}`)
+        setRoom(data.room);
         setMessages(page === 1 ? data.messages : [...data.messages, ...messages])
         setLastPage(data.messages.length === 0)
     }
@@ -48,7 +50,7 @@ const Chat = () => {
 
     return <>
         <div id="head" className="py-3 lh-sm border-bottom">
-            <strong className="mb-1">Members: </strong>
+            <strong className="mb-1">Members: {room.members?.map(m => m.first_name + ' ' + m.last_name).join(', ')}</strong>
         </div>
 
         <div id="conversation">
