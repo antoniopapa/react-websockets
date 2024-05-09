@@ -25,8 +25,10 @@ const Chat = () => {
         setPage(1)
         load()
 
-        socket.on('message', (msg) => {
-            setMessages(messages => [...messages, msg])
+        socket.on('message', (msg, rm) => {
+            if (room.id === rm.id) {
+                setMessages(messages => [...messages, msg])
+            }
         })
 
         return () => {
@@ -41,8 +43,8 @@ const Chat = () => {
     const submit = async (e) => {
         e.preventDefault()
 
-        await axios.post('messages', {
-            receiver_id: id, content: message, type: 'text'
+        await axios.post(`rooms/${id}/messages`, {
+            content: message
         })
 
         setMessage('')
@@ -62,7 +64,7 @@ const Chat = () => {
                 let html;
 
                 if (m.type === "text") {
-                    const cls = m.sender.id === user.id ? "alert-primary float-end" : "alert-success";
+                    const cls = m.sender.id === user?.id ? "alert-primary float-end" : "alert-success";
                     html = <div className={`alert d-inline-block ${cls}`} role="alert">
                         {m.content}
                     </div>
@@ -71,9 +73,9 @@ const Chat = () => {
                 }
 
                 return <div className="row pt-2" key={m.id}>
-                    {m.sender.id === user.id ? <div className="col-6"/> : null}
+                    {m.sender?.id === user?.id ? <div className="col-6"/> : null}
                     <div className="col-6">{html}</div>
-                    {m.receiver.id === user.id ? <div className="col-6"/> : null}
+                    {m.sender?.id !== user?.id ? <div className="col-6"/> : null}
                 </div>
             })}
         </div>
