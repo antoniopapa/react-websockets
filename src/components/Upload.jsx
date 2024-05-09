@@ -10,9 +10,8 @@ const Upload = () => {
 
         const formData = new FormData()
         formData.append('image', file)
-        formData.append('receiver_id', id)
 
-        await axios.post('images', formData)
+        await axios.post(`rooms/${id}/images`, formData)
     }
 
     return <div className="input-group-prepend">

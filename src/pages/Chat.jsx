@@ -3,7 +3,7 @@ import {socket} from "../index";
 import axios from "axios";
 import {Context} from "../components/Secure";
 import {useParams} from "react-router-dom";
-import Upload from "../components/Upload.";
+import Upload from "../components/Upload";
 
 const Chat = () => {
     const {id} = useParams();
@@ -26,7 +26,7 @@ const Chat = () => {
         load()
 
         socket.on('message', (msg, rm) => {
-            if (room.id === rm.id) {
+            if (parseInt(id) === parseInt(rm.id)) {
                 setMessages(messages => [...messages, msg])
             }
         })
